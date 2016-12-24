@@ -43,6 +43,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ModelBase.cs" />
+    <Compile Include="MpEditor.cs" />
     <Compile Include="MpEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidationBase.cs" />
