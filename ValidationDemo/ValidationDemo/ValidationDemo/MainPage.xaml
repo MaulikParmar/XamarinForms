@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ValidationDemo.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:ValidationDemo">
+
+    <StackLayout Padding="10,80,10,20">
+        <local:MpEntry
+            x:Name="firstName"
+            HorizontalOptions="Fill"
+            ShowErrorMessage="True"
+            Text="{Binding FirstName}"
+            VerticalOptions="Center" />
+
+        <Label
+            BindingContext="{x:Reference firstName}"
+            IsVisible="{Binding HasError}"
+            Text="{Binding ErrorMessage}"
+            TextColor="Red" />
+
+        <Button Clicked="OnClicked" Text="Submit" />
+
+    </StackLayout>
+
+</ContentPage>
