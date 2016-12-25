@@ -19,6 +19,15 @@ namespace ValidationDemo
         private void OnClicked(object sender, EventArgs e)
         {
             objCustomer.Validate();
+
+            if (objCustomer.HasErrors)
+            {
+                // Error message
+            }
+            else
+            {
+                // No error
+            }
         }
     }
 }

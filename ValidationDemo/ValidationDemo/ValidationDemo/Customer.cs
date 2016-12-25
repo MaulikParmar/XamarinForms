@@ -20,6 +20,7 @@ namespace ValidationDemo
         }
 
         private string _lastName;
+        [Display(Name = "Last Name")]
         [Required]
         [StringLength(20)]
         public string LastName
