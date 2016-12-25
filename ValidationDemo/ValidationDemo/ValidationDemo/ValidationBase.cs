@@ -26,7 +26,6 @@ namespace ValidationDemo
         }
         #endregion
 
-
         public IEnumerable GetErrors(string propertyName)
         {
             if (!string.IsNullOrEmpty(propertyName))

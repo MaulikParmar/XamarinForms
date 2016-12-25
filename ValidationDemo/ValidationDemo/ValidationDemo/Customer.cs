@@ -36,6 +36,7 @@ namespace ValidationDemo
 
 
         private string _email;
+        [Display(Name = "Email")]
         [Required]
         [Email]
         public string Email

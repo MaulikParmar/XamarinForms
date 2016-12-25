@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using System.Reflection;
 using System.Linq;
 using System.Collections;
+using System.ComponentModel.DataAnnotations;
 
 namespace ValidationDemo
 {
@@ -72,6 +73,7 @@ namespace ValidationDemo
             ErrorMessage = "";
             HasError = false;
             BindingPath = "";
+            this.Placeholder = "";
 
             if (_NotifyErrors != null)
             {
@@ -131,6 +133,7 @@ namespace ValidationDemo
                     {
                         // set binding path
                         BindingPath = binding.Path;
+                        SetPlaceHolder();
                     }
                 }
             }
@@ -169,6 +172,24 @@ namespace ValidationDemo
                 }
             }
         }
+
+        private void SetPlaceHolder()
+        {
+            if (!string.IsNullOrEmpty(BindingPath) && this.BindingContext != null)
+            {
+                // Get display attributes
+                var _attributes = this.BindingContext.GetType()
+                    .GetRuntimeProperty(BindingPath)
+                    .GetCustomAttribute<DisplayAttribute>();
+
+                // Set place holder
+                if (_attributes != null)
+                {
+                    this.Placeholder = _attributes.Name; // assign placeholder property
+                }
+            }
+        }
         #endregion
     }
 }
+

@@ -130,7 +130,7 @@ namespace ValidationDemo
                     if (binding != null && property != null && property.PropertyName.Equals("Text"))
                     {
                         // set binding path
-                        BindingPath = binding.Path;
+                        BindingPath = binding.Path;                        
                     }
                 }
             }
@@ -167,6 +167,7 @@ namespace ValidationDemo
                 }
             }
         }
+        
         #endregion
     }
 }
