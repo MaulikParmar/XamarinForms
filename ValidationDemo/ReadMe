@@ -1,7 +1,7 @@
 Custom Entry and Editor(MpEntry and MpEdior) that allow developer to validate control using data annotation method like in wpf.
 
 Support
-  It is not worked for windows 8.1 phone because windows 8.1 does not support System.ComponentModel.DataAnnotations and for IOS version must be greater than 7.2
+  It is not worked for windows 8.1 phone because windows 8.1 phone does not support System.ComponentModel.DataAnnotations and for IOS version must be greater than 7.2
   
 If you are wpf developer and you have worked on validation using 'INotifyDataErrorInfo', easy stuff for you.
 
