@@ -13,7 +13,7 @@ namespace ValidationDemo
         private string BindingPath = "";
         #endregion
 
-        #region Errors
+        #region Has Error
         public static readonly BindableProperty HasErrorProperty =
             BindableProperty.Create("HasError", typeof(bool), typeof(MpEditor), false, defaultBindingMode: BindingMode.TwoWay);
 
