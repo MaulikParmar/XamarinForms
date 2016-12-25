@@ -10,11 +10,22 @@ namespace ValidationDemo
 {
     public class ValidationBase : INotifyDataErrorInfo
     {
+        #region Properties
+        // Dictionary to collect errors of model
         private Dictionary<string, List<string>> _errors = new Dictionary<string, List<string>>();
+        // INotifyDataErrorInfo - Event
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        // Lock for async work
         private object _lock = new object();
-        public bool HasErrors { get { return _errors.Any(propErrors => propErrors.Value != null && propErrors.Value.Count > 0); } }
-        public bool IsValid { get { return this.HasErrors; } }
+        public bool HasErrors
+        {
+            get
+            {
+                return _errors.Any(propErrors => propErrors.Value != null && propErrors.Value.Count > 0);
+            }
+        }
+        #endregion
+
 
         public IEnumerable GetErrors(string propertyName)
         {
@@ -79,6 +90,7 @@ namespace ValidationDemo
                                      from mname in res.MemberNames
                                      group res by mname into g
                                      select g;
+
             //add _errors to dictionary and inform binding engine about _errors  
             foreach (var prop in resultsByPropNames)
             {

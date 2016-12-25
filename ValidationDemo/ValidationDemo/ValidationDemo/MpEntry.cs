@@ -146,10 +146,6 @@ namespace ValidationDemo
         /// <param name="e"></param>
         private void _NotifyErrors_ErrorsChanged(object sender, DataErrorsChangedEventArgs e)
         {
-            // reset error message and flag
-            HasError = false;
-            ErrorMessage = "";
-
             // Error changed
             if (e.PropertyName.Equals(this.BindingPath))
             {
@@ -159,10 +155,18 @@ namespace ValidationDemo
                             ?.Cast<string>()
                             .FirstOrDefault();
 
+                // If has error
+                // assign validation values
                 if (!string.IsNullOrEmpty(errors))
                 {
                     HasError = true; //set has error value to true
                     ErrorMessage = errors; // assign error
+                }
+                else
+                {
+                    // reset error message and flag
+                    HasError = false;
+                    ErrorMessage = "";
                 }
             }
         }

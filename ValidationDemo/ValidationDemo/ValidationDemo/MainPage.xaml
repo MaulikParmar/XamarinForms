@@ -6,15 +6,42 @@
     xmlns:local="clr-namespace:ValidationDemo">
 
     <StackLayout Padding="10,80,10,20">
+
+        <!--  First Name  -->
         <local:MpEntry
             x:Name="firstName"
             HorizontalOptions="Fill"
             ShowErrorMessage="True"
             Text="{Binding FirstName}"
             VerticalOptions="Center" />
-
         <Label
             BindingContext="{x:Reference firstName}"
+            IsVisible="{Binding HasError}"
+            Text="{Binding ErrorMessage}"
+            TextColor="Red" />
+
+        <!--  Last Name  -->
+        <local:MpEntry
+            x:Name="lastName"
+            HorizontalOptions="Fill"
+            ShowErrorMessage="True"
+            Text="{Binding LastName}"
+            VerticalOptions="Center" />
+        <Label
+            BindingContext="{x:Reference lastName}"
+            IsVisible="{Binding HasError}"
+            Text="{Binding ErrorMessage}"
+            TextColor="Red" />
+
+        <!--  Email  -->
+        <local:MpEntry
+            x:Name="Email"
+            HorizontalOptions="Fill"
+            ShowErrorMessage="True"
+            Text="{Binding Email}"
+            VerticalOptions="Center" />
+        <Label
+            BindingContext="{x:Reference Email}"
             IsVisible="{Binding HasError}"
             Text="{Binding ErrorMessage}"
             TextColor="Red" />

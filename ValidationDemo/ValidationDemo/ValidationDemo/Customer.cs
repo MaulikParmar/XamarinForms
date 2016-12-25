@@ -18,5 +18,35 @@ namespace ValidationDemo
                 base.NotifyPropertyChanged("FirstName");
             }
         }
+
+        private string _lastName;
+        [Required]
+        [StringLength(20)]
+        public string LastName
+        {
+            get { return _lastName; }
+            set
+            {
+                _lastName = value;
+                ValidateProperty(value);
+                base.NotifyPropertyChanged("LastName");
+            }
+        }
+
+
+        private string _email;
+        [Required]
+        [Email]
+        public string Email
+        {
+            get { return _email; }
+            set
+            {
+                _email = value;
+                ValidateProperty(value);
+                base.NotifyPropertyChanged("Email");
+            }
+        }
+
     }
 }
