@@ -368,7 +368,7 @@ namespace ValidationDemo
 
         #region Has Error
         public static readonly BindableProperty HasErrorProperty =
-            BindableProperty.Create("HasError", typeof(bool), typeof(MpEntry), false, defaultBindingMode: BindingMode.TwoWay);
+            BindableProperty.Create("HasError", typeof(bool), typeof(MpPicker), false, defaultBindingMode: BindingMode.TwoWay);
 
         public bool HasError
         {
@@ -380,7 +380,7 @@ namespace ValidationDemo
         #region ErrorMessage
 
         public static readonly BindableProperty ErrorMessageProperty =
-           BindableProperty.Create("ErrorMessage", typeof(string), typeof(MpEntry), string.Empty);
+           BindableProperty.Create("ErrorMessage", typeof(string), typeof(MpPicker), string.Empty);
 
         public string ErrorMessage
         {
@@ -392,12 +392,12 @@ namespace ValidationDemo
         #region ShowErrorMessage
 
         public static readonly BindableProperty ShowErrorMessageProperty =
-           BindableProperty.Create("ShowErrorMessage", typeof(bool), typeof(MpEntry), false, propertyChanged: OnShowErrorMessageChanged, defaultBindingMode: BindingMode.TwoWay);
+           BindableProperty.Create("ShowErrorMessage", typeof(bool), typeof(MpPicker), false, propertyChanged: OnShowErrorMessageChanged, defaultBindingMode: BindingMode.TwoWay);
 
         private static void OnShowErrorMessageChanged(BindableObject bindable, object oldValue, object newValue)
         {
             // execute on bindable context changed method
-            (bindable as MpEntry)?.CheckValidation();
+            (bindable as MpPicker)?.CheckValidation();
         }
 
         public bool ShowErrorMessage
