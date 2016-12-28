@@ -129,7 +129,7 @@ namespace ValidationDemo
                     // Now get binding and property value
                     Binding binding = bindingFieldInfo.GetValue(item) as Binding;
                     BindableProperty property = propertyFieldInfo.GetValue(item) as BindableProperty;
-                    if (binding != null && property != null && property.PropertyName.Equals("Text"))
+                    if (binding != null && property != null && property.PropertyName.Equals("SelectedItem"))
                     {
                         // set binding path
                         BindingPath = binding.Path;
