@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ValidationDemo
 {
+    // Under testing
     public class MpEntry : Entry
     {
         #region Property
