@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 using Xamarin.Forms;
 
 namespace ValidationDemo
 {
-    public class MpPicker : Picker
+    // Under testing
+    public class MpPicker : Picker, IControlValidation
     {
         #region Properties
+        public BaseControlValidation<MpPicker> _Validate;
         Boolean _disableNestedCalls;
 
         public static readonly BindableProperty ItemsSourceProperty =
@@ -63,6 +63,10 @@ namespace ValidationDemo
         public MpPicker()
         {
             this.SelectedIndexChanged += OnSelectedIndexChanged;
+            _Validate = new BaseControlValidation<MpPicker>(
+                this,
+                "SelectedItem",
+                (_hasError, _errorMessage)=> { HasError = _hasError; ErrorMessage = _errorMessage; });
         }
 
         public event EventHandler<SelectedItemChangedEventArgs> ItemSelected;
@@ -361,10 +365,7 @@ namespace ValidationDemo
         }
         #endregion
 
-        #region Validations Properties
-
-        private INotifyDataErrorInfo _NotifyErrors;
-        private string BindingPath = "";
+        #region Validations Properties        
 
         #region Has Error
         public static readonly BindableProperty HasErrorProperty =
@@ -397,7 +398,7 @@ namespace ValidationDemo
         private static void OnShowErrorMessageChanged(BindableObject bindable, object oldValue, object newValue)
         {
             // execute on bindable context changed method
-            (bindable as MpPicker)?.CheckValidation();
+            (bindable as MpPicker)?._Validate.CheckValidation();
         }
 
         public bool ShowErrorMessage
@@ -409,113 +410,13 @@ namespace ValidationDemo
 
         #endregion
 
-        /// <summary>
-        /// Method will subscibe and unsubsribe Error changed event
-        /// Get bindable property path of text property
-        /// </summary>
-        public void CheckValidation()
+        protected override void OnBindingContextChanged()
         {
-            // Reset variables values
-            ErrorMessage = "";
-            HasError = false;
-            BindingPath = "";
+            base.OnBindingContextChanged();
 
-            if (_NotifyErrors != null)
-            {
-                // Unsubscribe event
-                _NotifyErrors.ErrorsChanged += _NotifyErrors_ErrorsChanged;
-                _NotifyErrors = null; // Set null value on binding context change          
-            }
-
-            // Do nothing if show error message property value is false
-            if (!this.ShowErrorMessage)
-                return;
-
-            if (this.BindingContext != null && this.BindingContext is INotifyDataErrorInfo)
-            {
-                // Get 
-                _NotifyErrors = this.BindingContext as INotifyDataErrorInfo;
-                // Subscribe event
-                _NotifyErrors.ErrorsChanged += _NotifyErrors_ErrorsChanged;
-
-                // get property name for windows and other operating system
-                // for windows 10 property name will be : properties
-                // And other operation system its value : _properties
-                string condition = "properties";
-
-                // Get bindable properties
-                var _propertiesFieldInfo = typeof(BindableObject)
-                           .GetRuntimeFields()
-                           .Where(x => x.IsPrivate == true && x.Name.Contains(condition))
-                           .FirstOrDefault();
-
-                // Get value
-                var _properties = _propertiesFieldInfo
-                                 .GetValue(this) as IList;
-
-                if (_properties == null)
-                {
-                    return;
-                }
-
-                // Get first object
-                var fields = _properties[0]
-                    .GetType()
-                    .GetRuntimeFields();
-
-                // Get binding field info
-                FieldInfo bindingFieldInfo = fields.FirstOrDefault(x => x.Name.Equals("Binding"));
-                // Get property field info
-                FieldInfo propertyFieldInfo = fields.FirstOrDefault(x => x.Name.Equals("Property"));
-
-
-                foreach (var item in _properties)
-                {
-                    // Now get binding and property value
-                    Binding binding = bindingFieldInfo.GetValue(item) as Binding;
-                    BindableProperty property = propertyFieldInfo.GetValue(item) as BindableProperty;
-                    if (binding != null && property != null && property.PropertyName.Equals("Text"))
-                    {
-                        // set binding path
-                        BindingPath = binding.Path;
-                    }
-                }
-            }
+            this._Validate.CheckValidation();
         }
 
-        /// <summary>
-        /// Method will fire on property changed
-        /// Check validation of text property
-        /// Set validation if any validation message on property changed event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _NotifyErrors_ErrorsChanged(object sender, DataErrorsChangedEventArgs e)
-        {
-            // Error changed
-            if (e.PropertyName.Equals(this.BindingPath))
-            {
-                // Get errors
-                string errors = _NotifyErrors
-                            .GetErrors(e.PropertyName)
-                            ?.Cast<string>()
-                            .FirstOrDefault();
-
-                // If has error
-                // assign validation values
-                if (!string.IsNullOrEmpty(errors))
-                {
-                    HasError = true; //set has error value to true
-                    ErrorMessage = errors; // assign error
-                }
-                else
-                {
-                    // reset error message and flag
-                    HasError = false;
-                    ErrorMessage = "";
-                }
-            }
-        }
 
     }
 }

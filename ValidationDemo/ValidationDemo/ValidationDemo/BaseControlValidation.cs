@@ -1,67 +1,49 @@
-﻿using System.ComponentModel;
-using Xamarin.Forms;
-using System.Reflection;
-using System.Linq;
+﻿using System;
 using System.Collections;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Reflection;
+using Xamarin.Forms;
 
 namespace ValidationDemo
 {
-    // Under testing
-    public class MpEntry : Entry, IControlValidation
+   public class BaseControlValidation<T>
+                where T : BindableObject, IControlValidation
     {
         #region Property
         private INotifyDataErrorInfo _NotifyErrors;
         private string BindingPath = "";
+        private T _control;
+        private string _toValidatePropertyName = "";
+        private Action<bool, string> _SetPrivateProperties;
         #endregion
 
-        #region Has Error
-        public static readonly BindableProperty HasErrorProperty =
-            BindableProperty.Create("HasError", typeof(bool), typeof(MpEntry), false, defaultBindingMode:BindingMode.TwoWay);
-
-        public bool HasError
+        #region Constructor
+        /// <summary>
+        /// Base class to set validation using data annotations
+        /// </summary>
+        /// <param name="Control">Control want to validate</param>
+        /// <param name="ToValidatePropertyName">Property Name, Which you want to validate</param>
+        /// <param name="SetPrivateProperties">Action to set 'HasError' and 'ErrorMessage' properties value</param>
+        public BaseControlValidation(T Control, string ToValidatePropertyName, Action<bool, string> SetPrivateProperties)
         {
-            get { return (bool)GetValue(HasErrorProperty); }
-            private set { SetValue(HasErrorProperty, value); }
+            this._control = Control;
+            this._toValidatePropertyName = ToValidatePropertyName;
         }
         #endregion
-
-        #region ErrorMessage
-
-        public static readonly BindableProperty ErrorMessageProperty =
-           BindableProperty.Create("ErrorMessage", typeof(string), typeof(MpEntry), string.Empty);
-
-        public string ErrorMessage
+        /// <summary>
+        /// Set private property values of control
+        /// 'HasError'
+        /// 'ErrorMessage'
+        /// </summary>
+        /// <param name="HasError"></param>
+        /// <param name="ErrorMessage"></param>
+        private void SetPrivateProperies(bool HasError, string ErrorMessage)
         {
-            get { return (string)GetValue(ErrorMessageProperty); }
-            set { SetValue(ErrorMessageProperty, value); }
-        }
-        #endregion
-
-        #region ShowErrorMessage
-
-        public static readonly BindableProperty ShowErrorMessageProperty =
-           BindableProperty.Create("ShowErrorMessage", typeof(bool), typeof(MpEntry), false, propertyChanged:OnShowErrorMessageChanged, defaultBindingMode: BindingMode.TwoWay);
-
-        private static void OnShowErrorMessageChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-            // execute on bindable context changed method
-            (bindable as MpEntry)?.CheckValidation();
-        }
-
-        public bool ShowErrorMessage
-        {
-            get { return (bool)GetValue(ShowErrorMessageProperty); }
-            set { SetValue(ShowErrorMessageProperty, value); }
-        }
-        #endregion
-
-        #region Override Binding context change property
-        protected override void OnBindingContextChanged()
-        {
-            base.OnBindingContextChanged();
-
-            CheckValidation();
+            // Set 'HasError'
+            // Set 'ErrorMessage';
+            _SetPrivateProperties?.Invoke(HasError, ErrorMessage);
         }
 
         /// <summary>
@@ -71,10 +53,12 @@ namespace ValidationDemo
         public void CheckValidation()
         {
             // Reset variables values
-            ErrorMessage = "";
-            HasError = false;
+            // Set 'HasError' = false
+            // Set 'ErrorMessage' = "";
+            SetPrivateProperies(false, "");
+
             BindingPath = "";
-            this.Placeholder = "";
+            //this.Placeholder = "";
 
             if (_NotifyErrors != null)
             {
@@ -84,13 +68,13 @@ namespace ValidationDemo
             }
 
             // Do nothing if show error message property value is false
-            if (!this.ShowErrorMessage)
+            if (!this._control.ShowErrorMessage)
                 return;
 
-            if (this.BindingContext != null && this.BindingContext is INotifyDataErrorInfo)
+            if (this._control.BindingContext != null && this._control.BindingContext is INotifyDataErrorInfo)
             {
                 // Get 
-                _NotifyErrors = this.BindingContext as INotifyDataErrorInfo;
+                _NotifyErrors = this._control.BindingContext as INotifyDataErrorInfo;
                 // Subscribe event
                 _NotifyErrors.ErrorsChanged += _NotifyErrors_ErrorsChanged;
 
@@ -98,7 +82,7 @@ namespace ValidationDemo
                 // for windows 10 property name will be : properties
                 // And other operation system its value : _properties
                 string condition = "properties";
-                
+
                 // Get bindable properties
                 var _propertiesFieldInfo = typeof(BindableObject)
                            .GetRuntimeFields()
@@ -130,7 +114,7 @@ namespace ValidationDemo
                     // Now get binding and property value
                     Binding binding = bindingFieldInfo.GetValue(item) as Binding;
                     BindableProperty property = propertyFieldInfo.GetValue(item) as BindableProperty;
-                    if (binding != null && property != null && property.PropertyName.Equals("SelectedItem"))
+                    if (binding != null && property != null && property.PropertyName.Equals(this._toValidatePropertyName))
                     {
                         // set binding path
                         BindingPath = binding.Path;
@@ -162,35 +146,36 @@ namespace ValidationDemo
                 // assign validation values
                 if (!string.IsNullOrEmpty(errors))
                 {
-                    HasError = true; //set has error value to true
-                    ErrorMessage = errors; // assign error
+                    // HasError = true; //set has error value to true
+                    // ErrorMessage = errors; // assign error
+                    this.SetPrivateProperies(true, errors);
                 }
                 else
                 {
                     // reset error message and flag
-                    HasError = false;
-                    ErrorMessage = "";
+                    // HasError = false;
+                    //  ErrorMessage = "";
+                    this.SetPrivateProperies(false, "");
                 }
             }
         }
 
         private void SetPlaceHolder()
         {
-            if (!string.IsNullOrEmpty(BindingPath) && this.BindingContext != null)
+            if (!string.IsNullOrEmpty(BindingPath) && this._control.BindingContext != null)
             {
                 // Get display attributes
-                var _attributes = this.BindingContext.GetType()
+                var _attributes = this._control.BindingContext.GetType()
                     .GetRuntimeProperty(BindingPath)
                     .GetCustomAttribute<DisplayAttribute>();
 
                 // Set place holder
                 if (_attributes != null)
                 {
-                    this.Placeholder = _attributes.Name; // assign placeholder property
+                   // this.Placeholder = _attributes.Name; // assign placeholder property
                 }
             }
         }
-        #endregion
+
     }
 }
-
