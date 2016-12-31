@@ -30,6 +30,7 @@ namespace ValidationDemo
         {
             this._control = Control;
             this._toValidatePropertyName = ToValidatePropertyName;
+            this._SetPrivateProperties = SetPrivateProperties;
         }
         #endregion
         /// <summary>
@@ -39,7 +40,7 @@ namespace ValidationDemo
         /// </summary>
         /// <param name="HasError"></param>
         /// <param name="ErrorMessage"></param>
-        private void SetPrivateProperies(bool HasError, string ErrorMessage)
+        private void InvokeSetPrivatePropertyAction(bool HasError, string ErrorMessage)
         {
             // Set 'HasError'
             // Set 'ErrorMessage';
@@ -55,7 +56,7 @@ namespace ValidationDemo
             // Reset variables values
             // Set 'HasError' = false
             // Set 'ErrorMessage' = "";
-            SetPrivateProperies(false, "");
+            InvokeSetPrivatePropertyAction(false, "");
 
             BindingPath = "";
             //this.Placeholder = "";
@@ -88,10 +89,13 @@ namespace ValidationDemo
                            .GetRuntimeFields()
                            .Where(x => x.IsPrivate == true && x.Name.Contains(condition))
                            .FirstOrDefault();
+               
+                // Get Control
+                var bindable = (BindableObject)_control;
 
                 // Get value
                 var _properties = _propertiesFieldInfo
-                                 .GetValue(this) as IList;
+                                 .GetValue(bindable) as IList;
 
                 if (_properties == null)
                 {
@@ -148,14 +152,14 @@ namespace ValidationDemo
                 {
                     // HasError = true; //set has error value to true
                     // ErrorMessage = errors; // assign error
-                    this.SetPrivateProperies(true, errors);
+                    this.InvokeSetPrivatePropertyAction(true, errors);
                 }
                 else
                 {
                     // reset error message and flag
                     // HasError = false;
                     //  ErrorMessage = "";
-                    this.SetPrivateProperies(false, "");
+                    this.InvokeSetPrivatePropertyAction(false, "");
                 }
             }
         }

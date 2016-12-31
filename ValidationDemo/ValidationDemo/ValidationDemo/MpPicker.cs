@@ -6,7 +6,6 @@ using Xamarin.Forms;
 
 namespace ValidationDemo
 {
-    // Under testing
     public class MpPicker : Picker, IControlValidation
     {
         #region Properties
@@ -65,11 +64,18 @@ namespace ValidationDemo
             this.SelectedIndexChanged += OnSelectedIndexChanged;
             _Validate = new BaseControlValidation<MpPicker>(
                 this,
-                "SelectedItem",
-                (_hasError, _errorMessage)=> { HasError = _hasError; ErrorMessage = _errorMessage; });
+                MpPicker.SelectedItemProperty.PropertyName,
+                this.SetPrivateFields);
         }
 
         public event EventHandler<SelectedItemChangedEventArgs> ItemSelected;
+
+        private void SetPrivateFields(bool _hasError, string _errorMessage)
+        {
+            this.HasError = _hasError;
+            this.ErrorMessage = _errorMessage;
+        }
+
         #endregion
 
         #region Methods / Actions
@@ -398,7 +404,11 @@ namespace ValidationDemo
         private static void OnShowErrorMessageChanged(BindableObject bindable, object oldValue, object newValue)
         {
             // execute on bindable context changed method
-            (bindable as MpPicker)?._Validate.CheckValidation();
+            MpPicker control = bindable as MpPicker;
+            if (control != null && control.BindingContext != null)
+            {
+                control._Validate.CheckValidation();
+            }
         }
 
         public bool ShowErrorMessage
@@ -416,7 +426,6 @@ namespace ValidationDemo
 
             this._Validate.CheckValidation();
         }
-
 
     }
 }

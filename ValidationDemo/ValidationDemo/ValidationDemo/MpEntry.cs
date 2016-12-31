@@ -46,7 +46,11 @@ namespace ValidationDemo
         private static void OnShowErrorMessageChanged(BindableObject bindable, object oldValue, object newValue)
         {
             // execute on bindable context changed method
-            (bindable as MpEntry)?.CheckValidation();
+            MpEntry control = bindable as MpEntry;
+            if (control != null && control.BindingContext != null)
+            {
+                control.CheckValidation();
+            }
         }
 
         public bool ShowErrorMessage
@@ -73,8 +77,7 @@ namespace ValidationDemo
             // Reset variables values
             ErrorMessage = "";
             HasError = false;
-            BindingPath = "";
-            this.Placeholder = "";
+            BindingPath = "";           
 
             if (_NotifyErrors != null)
             {
@@ -86,6 +89,8 @@ namespace ValidationDemo
             // Do nothing if show error message property value is false
             if (!this.ShowErrorMessage)
                 return;
+
+            this.Placeholder = ""; // Change place holder value
 
             if (this.BindingContext != null && this.BindingContext is INotifyDataErrorInfo)
             {
@@ -130,7 +135,7 @@ namespace ValidationDemo
                     // Now get binding and property value
                     Binding binding = bindingFieldInfo.GetValue(item) as Binding;
                     BindableProperty property = propertyFieldInfo.GetValue(item) as BindableProperty;
-                    if (binding != null && property != null && property.PropertyName.Equals("SelectedItem"))
+                    if (binding != null && property != null && property.PropertyName.Equals("Text"))
                     {
                         // set binding path
                         BindingPath = binding.Path;

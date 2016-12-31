@@ -46,6 +46,18 @@
             Text="{Binding ErrorMessage}"
             TextColor="Red" />
 
+        <local:MpPicker
+            x:Name="location"
+            DisplayMemberPath="Name"
+            ItemsSource="{Binding Locations}"
+            SelectedItem="{Binding SelectedLocation}"
+            ShowErrorMessage="True" />
+        <Label
+            BindingContext="{x:Reference location}"
+            IsVisible="{Binding HasError}"
+            Text="{Binding ErrorMessage}"
+            TextColor="Red" />
+
         <Button Clicked="OnClicked" Text="Submit" />
 
     </StackLayout>

@@ -43,8 +43,11 @@ namespace ValidationDemo
 
         private static void OnShowErrorMessageChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            // execute on bindable context changed method
-            (bindable as MpEditor)?.CheckValidation();
+            MpEditor control = bindable as MpEditor;
+            if (control != null && control.BindingContext != null)
+            {
+                control.CheckValidation();
+            }
         }
 
         public bool ShowErrorMessage
