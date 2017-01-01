@@ -76,6 +76,11 @@ namespace ValidationDemo
             {
                 // Get 
                 _NotifyErrors = this._control.BindingContext as INotifyDataErrorInfo;
+
+                // Return do nothing for your object
+                if (_NotifyErrors == null)
+                    return;
+
                 // Subscribe event
                 _NotifyErrors.ErrorsChanged += _NotifyErrors_ErrorsChanged;
 
