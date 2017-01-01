@@ -14,6 +14,7 @@ namespace ValidationDemo
             InitializeComponent();
 
             MainPage = new ValidationDemo.MainPage();
+            //MainPage = new ValidationDemo.Layouts.LayoutDemo();
         }
 
         protected override void OnStart()

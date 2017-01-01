@@ -8,13 +8,85 @@
 
         <!--  Application resource dictionary  -->
         <ResourceDictionary>
+            <!--  MP ENTRY CONTROL STYLE  -->
             <Style TargetType="local:MpEntry">
                 <Style.Triggers>
                     <Trigger TargetType="local:MpEntry" Property="HasError" Value="True">
                         <Setter Property="BackgroundColor" Value="Red" />
                     </Trigger>
+                    <!--<MultiTrigger TargetType="local:MpEntry">
+                        <MultiTrigger.Conditions>
+                            <PropertyCondition Property="HasError" Value="True" />
+                            <PropertyCondition Property="IsFocused" Value="True" />
+                        </MultiTrigger.Conditions>
+
+                        <Setter Property="BackgroundColor" Value="Red" />
+
+                    </MultiTrigger>-->
                 </Style.Triggers>
             </Style>
+
+            <!--  MP PICKER CONTROL STYLE  -->
+            <Style TargetType="local:MpPicker">
+                <Style.Triggers>
+                    <Trigger TargetType="local:MpPicker" Property="HasError" Value="True">
+                        <Setter Property="BackgroundColor" Value="Red" />
+                    </Trigger>
+                    <!--<MultiTrigger TargetType="local:MpPicker">
+                        <MultiTrigger.Conditions>
+                            <PropertyCondition Property="HasError" Value="True" />
+                            <PropertyCondition Property="IsFocused" Value="True" />
+                        </MultiTrigger.Conditions>
+
+                        <Setter Property="BackgroundColor" Value="Red" />
+                    -->
+                    <!--  multiple Setter elements are allowed  -->
+                    <!--
+                    </MultiTrigger>-->
+                </Style.Triggers>
+            </Style>
+
+            <!--  MP EDITOR CONTROL STYLE  -->
+            <Style TargetType="local:MpEditor">
+                <Style.Triggers>
+                    <Trigger TargetType="local:MpEditor" Property="HasError" Value="True">
+                        <Setter Property="BackgroundColor" Value="Red" />
+                    </Trigger>
+                    <!--<MultiTrigger TargetType="local:MpEditor">
+                        <MultiTrigger.Conditions>
+                            <PropertyCondition Property="HasError" Value="True" />
+                            <PropertyCondition Property="IsFocused" Value="True" />
+                        </MultiTrigger.Conditions>
+
+                        <Setter Property="BackgroundColor" Value="Red" />
+                    -->
+                    <!--  multiple Setter elements are allowed  -->
+                    <!--
+                    </MultiTrigger>-->
+                </Style.Triggers>
+            </Style>
+
+            <!--  MP DATE PICKER CONTROL STYLE  -->
+            <Style TargetType="local:MpDatePicker">
+                <Style.Triggers>
+                    <Trigger TargetType="local:MpDatePicker" Property="HasError" Value="True">
+                        <Setter Property="BackgroundColor" Value="Red" />
+                    </Trigger>
+                    <!--<MultiTrigger TargetType="local:MpEditor">
+                        <MultiTrigger.Conditions>
+                            <PropertyCondition Property="HasError" Value="True" />
+                            <PropertyCondition Property="IsFocused" Value="True" />
+                        </MultiTrigger.Conditions>
+
+                        <Setter Property="BackgroundColor" Value="Red" />
+                    -->
+                    <!--  multiple Setter elements are allowed  -->
+                    <!--
+                    </MultiTrigger>-->
+                </Style.Triggers>
+            </Style>
+
+
         </ResourceDictionary>
 
     </Application.Resources>

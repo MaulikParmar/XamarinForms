@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ValidationDemo
@@ -87,6 +88,25 @@ namespace ValidationDemo
                     _selectedLocation = value;
                     ValidateProperty(value);                    
                     base.NotifyPropertyChanged("SelectedLocation");
+                }
+            }
+        }
+
+
+        private DateTime _JoinDate;
+        [Display(Name ="Join Date")]
+        [Required]
+        [Range(typeof(DateTime), "1/1/2017", "1/2/2017")]
+        public DateTime JoinDate
+        {
+            get { return _JoinDate; }
+            set
+            {
+                if (_JoinDate != value)
+                {
+                    _JoinDate = value;
+                    ValidateProperty(value);
+                    base.NotifyPropertyChanged("JoinDate");
                 }
             }
         }

@@ -16,7 +16,7 @@ namespace ValidationDemo
         private string BindingPath = "";
         private T _control;
         private string _toValidatePropertyName = "";
-        private Action<bool, string> _SetPrivateProperties;
+        private Action<bool, string> _SetPrivatePropertiesAction;
         #endregion
 
         #region Constructor
@@ -30,7 +30,7 @@ namespace ValidationDemo
         {
             this._control = Control;
             this._toValidatePropertyName = ToValidatePropertyName;
-            this._SetPrivateProperties = SetPrivateProperties;
+            this._SetPrivatePropertiesAction = SetPrivateProperties;
         }
         #endregion
         /// <summary>
@@ -44,7 +44,7 @@ namespace ValidationDemo
         {
             // Set 'HasError'
             // Set 'ErrorMessage';
-            _SetPrivateProperties?.Invoke(HasError, ErrorMessage);
+            _SetPrivatePropertiesAction?.Invoke(HasError, ErrorMessage);
         }
 
         /// <summary>

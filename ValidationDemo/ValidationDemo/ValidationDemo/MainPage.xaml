@@ -46,6 +46,7 @@
             Text="{Binding ErrorMessage}"
             TextColor="Red" />
 
+        <!--  Location  -->
         <local:MpPicker
             x:Name="location"
             DisplayMemberPath="Name"
@@ -54,6 +55,19 @@
             ShowErrorMessage="True" />
         <Label
             BindingContext="{x:Reference location}"
+            IsVisible="{Binding HasError}"
+            Text="{Binding ErrorMessage}"
+            TextColor="Red" />
+
+        <!--  Join Date  -->
+        <local:MpDatePicker
+            x:Name="joinDate"
+            Date="{Binding JoinDate}"
+            HorizontalOptions="Fill"
+            ShowErrorMessage="True"
+            VerticalOptions="Center" />
+        <Label
+            BindingContext="{x:Reference joinDate}"
             IsVisible="{Binding HasError}"
             Text="{Binding ErrorMessage}"
             TextColor="Red" />
