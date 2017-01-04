@@ -3,7 +3,13 @@ Custom Entry and Editor(MpEntry and MpEdior) that allow developer to validate co
 Support
   It is not worked for windows 8.1 phone because windows 8.1 phone does not support System.ComponentModel.DataAnnotations and for IOS version must be greater than 7.2
   
-Video URL : https://www.youtube.com/watch?v=eEi-Oky4U08
+Video URL
+
+Part 1 : https://www.youtube.com/watch?v=eEi-Oky4U08
+
+Part 2 : https://www.youtube.com/watch?v=c7AQh1RBH1o
+
+
 
 If you are wpf developer and you have worked on validation using 'INotifyDataErrorInfo', easy stuff for you.
 
