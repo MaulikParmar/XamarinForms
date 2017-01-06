@@ -17,6 +17,7 @@ namespace ValidationDemo
         private T _control;
         private string _toValidatePropertyName = "";
         private Action<bool, string> _SetPrivatePropertiesAction;
+        private INotifyScrollToProperty _NotifyScroll;
         #endregion
 
         #region Constructor
@@ -68,6 +69,13 @@ namespace ValidationDemo
                 _NotifyErrors = null; // Set null value on binding context change          
             }
 
+            // Remove notify scroll to property
+            if (_NotifyScroll != null)
+            {
+                _NotifyScroll.ScrollToProperty -= NotifyScroll_ScrollToProperty;
+                _NotifyScroll = null;
+            }
+
             // Do nothing if show error message property value is false
             if (!this._control.ShowErrorMessage)
                 return;
@@ -80,6 +88,13 @@ namespace ValidationDemo
                 // Return do nothing for your object
                 if (_NotifyErrors == null)
                     return;
+
+                // Remove notify scroll to property
+                if (_control.BindingContext is INotifyScrollToProperty)
+                {
+                    _NotifyScroll = _control.BindingContext as INotifyScrollToProperty;
+                    _NotifyScroll.ScrollToProperty += NotifyScroll_ScrollToProperty;
+                }
 
                 // Subscribe event
                 _NotifyErrors.ErrorsChanged += _NotifyErrors_ErrorsChanged;
@@ -130,6 +145,18 @@ namespace ValidationDemo
                         SetPlaceHolder();
                     }
                 }
+            }
+        }
+
+        // Scroll to control when request for scroll to property
+        private void NotifyScroll_ScrollToProperty(string PropertyName)
+        {
+            // If property is requested property
+            if (this.BindingPath.Equals(PropertyName))
+            {
+                // Get scroll 
+                ScrollView _scroll = Utility.GetParentControl<ScrollView>(_control as Element);
+                _scroll?.ScrollToAsync(_control as Element, ScrollToPosition.Center, true);
             }
         }
 

@@ -8,13 +8,17 @@ using System.Runtime.CompilerServices;
 
 namespace ValidationDemo
 {
-    public class ValidationBase : INotifyDataErrorInfo
+    public class ValidationBase : INotifyScrollToProperty, INotifyDataErrorInfo
     {
         #region Properties
         // Dictionary to collect errors of model
         private Dictionary<string, List<string>> _errors = new Dictionary<string, List<string>>();
         // INotifyDataErrorInfo - Event
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        // Scroll To Event Property
+        public event ScrollToPropertyHandler ScrollToProperty;
+
         // Lock for async work
         private object _lock = new object();
         public bool HasErrors
@@ -24,6 +28,19 @@ namespace ValidationDemo
                 return _errors.Any(propErrors => propErrors.Value != null && propErrors.Value.Count > 0);
             }
         }
+
+        // Return first invalid property name
+        public string GetFirstInvalidPropertyName
+        {
+            get
+            {
+                if (!this.HasErrors)
+                    return string.Empty;
+
+                return _errors.Select(x => x.Key).FirstOrDefault();
+            }
+        }
+
         #endregion
 
         public IEnumerable GetErrors(string propertyName)
@@ -98,5 +115,21 @@ namespace ValidationDemo
                 OnErrorsChanged(prop.Key);
             }
         }
+
+        #region Invoke Scroll To Property
+        /// <summary>
+        /// Invoke scroll to property event
+        /// </summary>
+        /// <param name="PropertyName">PropertyName</param>
+        protected void InvokeScrollToProperty(string PropertyName)
+        {
+            ScrollToProperty?.Invoke(PropertyName);
+        }
+
+        public void ScrollToControlProperty(string PropertyName)
+        {
+            InvokeScrollToProperty(PropertyName);
+        }
+        #endregion
     }
 }

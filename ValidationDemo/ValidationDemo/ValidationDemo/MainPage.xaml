@@ -5,75 +5,82 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ValidationDemo">
 
-    <StackLayout Padding="10,80,10,20">
+    <ScrollView>
+        <StackLayout Padding="10,80,10,20">
 
-        <!--  First Name  -->
-        <local:MpEntry
+            <!--  First Name  -->
+            <local:MpEntry
             x:Name="firstName"
             HorizontalOptions="Fill"
             ShowErrorMessage="True"
             Text="{Binding FirstName}"
             VerticalOptions="Center" />
-        <Label
+            <Label
             BindingContext="{x:Reference firstName}"
             IsVisible="{Binding HasError}"
             Text="{Binding ErrorMessage}"
             TextColor="Red" />
 
-        <!--  Last Name  -->
-        <local:MpEntry
+            <!--  Last Name  -->
+            <local:MpEntry
             x:Name="lastName"
             HorizontalOptions="Fill"
             ShowErrorMessage="True"
             Text="{Binding LastName}"
             VerticalOptions="Center" />
-        <Label
+            <Label
             BindingContext="{x:Reference lastName}"
             IsVisible="{Binding HasError}"
             Text="{Binding ErrorMessage}"
             TextColor="Red" />
 
-        <!--  Email  -->
-        <local:MpEntry
+            <!--  Email  -->
+            <local:MpEntry
             x:Name="Email"
             HorizontalOptions="Fill"
             ShowErrorMessage="True"
             Text="{Binding Email}"
             VerticalOptions="Center" />
-        <Label
+            <Label
             BindingContext="{x:Reference Email}"
             IsVisible="{Binding HasError}"
             Text="{Binding ErrorMessage}"
             TextColor="Red" />
 
-        <!--  Location  -->
-        <local:MpPicker
+            <!--  Location  -->
+            <local:MpPicker
             x:Name="location"
             DisplayMemberPath="Name"
             ItemsSource="{Binding Locations}"
             SelectedItem="{Binding SelectedLocation}"
             ShowErrorMessage="True" />
-        <Label
+            <Label
             BindingContext="{x:Reference location}"
             IsVisible="{Binding HasError}"
             Text="{Binding ErrorMessage}"
             TextColor="Red" />
 
-        <!--  Join Date  -->
-        <local:MpDatePicker
+            <!--  Join Date  -->
+            <local:MpDatePicker
             x:Name="joinDate"
             Date="{Binding JoinDate}"
             HorizontalOptions="Fill"
             ShowErrorMessage="True"
             VerticalOptions="Center" />
-        <Label
+            <Label
             BindingContext="{x:Reference joinDate}"
             IsVisible="{Binding HasError}"
             Text="{Binding ErrorMessage}"
             TextColor="Red" />
 
-        <Button Clicked="OnClicked" Text="Submit" />
+            <local:MpEntry />
+            <local:MpEntry />
+            <local:MpEntry />
+            <local:MpEntry />
 
-    </StackLayout>
+            <Button Clicked="OnClicked" Text="Submit" />
+
+        </StackLayout>
+    </ScrollView>
 
 </ContentPage>

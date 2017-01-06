@@ -23,6 +23,7 @@ namespace ValidationDemo
             if (objCustomer.HasErrors)
             {
                 // Error message
+                objCustomer.ScrollToControlProperty(objCustomer.GetFirstInvalidPropertyName);
             }
             else
             {

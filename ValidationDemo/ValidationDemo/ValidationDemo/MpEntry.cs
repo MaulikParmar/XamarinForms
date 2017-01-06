@@ -13,6 +13,7 @@ namespace ValidationDemo
         #region Property
         private INotifyDataErrorInfo _NotifyErrors;
         private string BindingPath = "";
+        private INotifyScrollToProperty _NotifyScroll;
         #endregion
 
         #region Has Error
@@ -86,6 +87,13 @@ namespace ValidationDemo
                 _NotifyErrors = null; // Set null value on binding context change          
             }
 
+            // Remove notify scroll to property
+            if (_NotifyScroll != null)
+            {
+                _NotifyScroll.ScrollToProperty -= NotifyScroll_ScrollToProperty;
+                _NotifyScroll = null;
+            }
+
             // Do nothing if show error message property value is false
             if (!this.ShowErrorMessage)
                 return;
@@ -96,8 +104,19 @@ namespace ValidationDemo
             {
                 // Get 
                 _NotifyErrors = this.BindingContext as INotifyDataErrorInfo;
+
+                if (_NotifyErrors == null)
+                    return;
+
                 // Subscribe event
                 _NotifyErrors.ErrorsChanged += _NotifyErrors_ErrorsChanged;
+
+                // Remove notify scroll to property
+                if (this.BindingContext is INotifyScrollToProperty)
+                {
+                    _NotifyScroll = this.BindingContext as INotifyScrollToProperty;
+                    _NotifyScroll.ScrollToProperty += NotifyScroll_ScrollToProperty;
+                }
 
                 // get property name for windows and other operating system
                 // for windows 10 property name will be : properties
@@ -129,7 +148,6 @@ namespace ValidationDemo
                 // Get property field info
                 FieldInfo propertyFieldInfo = fields.FirstOrDefault(x => x.Name.Equals("Property"));
 
-
                 foreach (var item in _properties)
                 {
                     // Now get binding and property value
@@ -142,6 +160,18 @@ namespace ValidationDemo
                         SetPlaceHolder();
                     }
                 }
+            }
+        }
+
+        // Scroll to control when request for scroll to property
+        private void NotifyScroll_ScrollToProperty(string PropertyName)
+        {
+            // If property is requested property
+            if (this.BindingPath.Equals(PropertyName))
+            {
+                // Get scroll 
+                ScrollView _scroll = Utility.GetParentControl<ScrollView>(this);
+                _scroll?.ScrollToAsync(this, ScrollToPosition.Center, true);
             }
         }
 
