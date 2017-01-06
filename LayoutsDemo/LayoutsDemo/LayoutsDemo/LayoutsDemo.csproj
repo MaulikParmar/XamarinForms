@@ -39,6 +39,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layouts\BaseLayout.cs" />
+    <Compile Include="Layouts\UniformGrid.cs" />
     <Compile Include="Layouts\WrapLayout.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

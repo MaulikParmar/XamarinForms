@@ -14,7 +14,7 @@ namespace LayoutsDemo.Layouts
     public abstract class BaseLayout<T> : Layout<T> where T : View
     {
         #region Layout Info
-        struct LayoutInfo
+        protected struct LayoutInfo
         {
             public LayoutInfo(int visibleChildCount, Size cellSize, int rows, int cols) : this()
             {
@@ -50,7 +50,7 @@ namespace LayoutsDemo.Layouts
 
         #region Propeties
 
-        Dictionary<Size, LayoutInfo> layoutInfoCache = new Dictionary<Size, LayoutInfo>();
+        protected Dictionary<Size, LayoutInfo> layoutInfoCache = new Dictionary<Size, LayoutInfo>();
 
         // Orientation
         public static readonly BindableProperty OrientationProperty =
@@ -68,7 +68,6 @@ namespace LayoutsDemo.Layouts
             get { return (WrapOrientation)GetValue(OrientationProperty); }
             set { SetValue(OrientationProperty, value); }
         }
-
 
 
         // Column spacing
@@ -102,7 +101,7 @@ namespace LayoutsDemo.Layouts
         #endregion
 
         #region GetLayoutInfo
-        LayoutInfo GetaLyoutInfo(double width, double height)
+        protected virtual LayoutInfo GetaLyoutInfo(double width, double height)
         {
             Size size = new Size(width, height);
 
@@ -231,7 +230,7 @@ namespace LayoutsDemo.Layouts
             foreach (View child in this.Children.Where(c => c.IsVisible))
             {
                 // Get the child's requested size.
-                SizeRequest childSizeRequest = child.GetSizeRequest(width, double.PositiveInfinity);
+                //SizeRequest childSizeRequest = child.GetSizeRequest(width, double.PositiveInfinity);
 
                 LayoutChildIntoBoundingRegion(child,
                     new Rectangle(new Point(xChild, yChild), layoutInfo.CellSize));
