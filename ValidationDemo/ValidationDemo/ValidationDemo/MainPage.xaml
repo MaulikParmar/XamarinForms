@@ -5,74 +5,94 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ValidationDemo">
 
-    <ScrollView>
-        <StackLayout Padding="10,80,10,20">
+    <ScrollView Padding="10,0">
+        <StackLayout Padding="10,30,10,20">
 
             <!--  First Name  -->
             <local:MpEntry
-            x:Name="firstName"
-            HorizontalOptions="Fill"
-            ShowErrorMessage="True"
-            Text="{Binding FirstName}"
-            VerticalOptions="Center" />
+                x:Name="firstName"
+                HorizontalOptions="Fill"
+                ShowErrorMessage="True"
+                Text="{Binding FirstName}"
+                VerticalOptions="Center" />
             <Label
-            BindingContext="{x:Reference firstName}"
-            IsVisible="{Binding HasError}"
-            Text="{Binding ErrorMessage}"
-            TextColor="Red" />
+                BindingContext="{x:Reference firstName}"
+                IsVisible="{Binding HasError}"
+                Text="{Binding ErrorMessage}"
+                TextColor="Red" />
 
             <!--  Last Name  -->
             <local:MpEntry
-            x:Name="lastName"
-            HorizontalOptions="Fill"
-            ShowErrorMessage="True"
-            Text="{Binding LastName}"
-            VerticalOptions="Center" />
+                x:Name="lastName"
+                HorizontalOptions="Fill"
+                ShowErrorMessage="True"
+                Text="{Binding LastName}"
+                TextColor="Black"
+                VerticalOptions="Center" />
             <Label
-            BindingContext="{x:Reference lastName}"
-            IsVisible="{Binding HasError}"
-            Text="{Binding ErrorMessage}"
-            TextColor="Red" />
+                BindingContext="{x:Reference lastName}"
+                IsVisible="{Binding HasError}"
+                Text="{Binding ErrorMessage}"
+                TextColor="Red" />
 
             <!--  Email  -->
             <local:MpEntry
-            x:Name="Email"
-            HorizontalOptions="Fill"
-            ShowErrorMessage="True"
-            Text="{Binding Email}"
-            VerticalOptions="Center" />
+                x:Name="Email"
+                HorizontalOptions="Fill"
+                ShowErrorMessage="True"
+                Text="{Binding Email}"
+                TextColor="Black"
+                VerticalOptions="Center" />
             <Label
-            BindingContext="{x:Reference Email}"
-            IsVisible="{Binding HasError}"
-            Text="{Binding ErrorMessage}"
-            TextColor="Red" />
+                BindingContext="{x:Reference Email}"
+                IsVisible="{Binding HasError}"
+                Text="{Binding ErrorMessage}"
+                TextColor="Red" />
 
             <!--  Location  -->
             <local:MpPicker
-            x:Name="location"
-            DisplayMemberPath="Name"
-            ItemsSource="{Binding Locations}"
-            SelectedItem="{Binding SelectedLocation}"
-            ShowErrorMessage="True" />
+                x:Name="location"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding Locations}"
+                SelectedItem="{Binding SelectedLocation}"
+                ShowErrorMessage="True" />
             <Label
-            BindingContext="{x:Reference location}"
-            IsVisible="{Binding HasError}"
-            Text="{Binding ErrorMessage}"
-            TextColor="Red" />
+                BindingContext="{x:Reference location}"
+                IsVisible="{Binding HasError}"
+                Text="{Binding ErrorMessage}"
+                TextColor="Red" />
 
             <!--  Join Date  -->
-            <local:MpDatePicker
-            x:Name="joinDate"
-            Date="{Binding JoinDate}"
-            HorizontalOptions="Fill"
-            ShowErrorMessage="True"
-            VerticalOptions="Center" />
+            <!--<local:MpDatePicker
+                x:Name="joinDate"
+                Date="{Binding JoinDate}"
+                HorizontalOptions="Fill"
+                ShowErrorMessage="True"
+                VerticalOptions="Center" />
             <Label
-            BindingContext="{x:Reference joinDate}"
-            IsVisible="{Binding HasError}"
-            Text="{Binding ErrorMessage}"
-            TextColor="Red" />
+                BindingContext="{x:Reference joinDate}"
+                IsVisible="{Binding HasError}"
+                Text="{Binding ErrorMessage}"
+                TextColor="Red" />-->
 
+            <local:MpEntry />
+            <local:MpEntry />
+            <local:MpEntry />
+            <local:MpEntry />
+            <local:MpEntry />
+            <local:MpEntry />
+            <local:MpEntry />
+            <local:MpEntry />
+            <local:MpEntry />
+            <local:MpEntry />
+            <local:MpEntry />
+            <local:MpEntry />
+            <local:MpEntry />
+            <local:MpEntry />
+            <local:MpEntry />
+            <local:MpEntry />
+            <local:MpEntry />
+            <local:MpEntry />
             <local:MpEntry />
             <local:MpEntry />
             <local:MpEntry />
