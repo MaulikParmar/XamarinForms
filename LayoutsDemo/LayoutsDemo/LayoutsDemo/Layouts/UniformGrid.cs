@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace LayoutsDemo.Layouts
 {
-    public class UniformGrid : BaseLayout<View>
+    public class UniformGrid : BaseLayout
     {
         #region Chidren layout
         protected override void LayoutChildren(double x, double y, double width, double height)

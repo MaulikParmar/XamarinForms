@@ -11,7 +11,7 @@ namespace LayoutsDemo.Layouts
         VerticalThenHorizontal
     }
 
-    public abstract class BaseLayout<T> : Layout<T> where T : View
+    public abstract class BaseLayout : Layout<View>
     {
         #region Layout Info
         protected struct LayoutInfo
@@ -56,11 +56,11 @@ namespace LayoutsDemo.Layouts
         public static readonly BindableProperty OrientationProperty =
             BindableProperty.Create("Orientation",
                 typeof(WrapOrientation),
-                typeof(BaseLayout<T>),
+                typeof(BaseLayout),
                 default(WrapOrientation),
                 propertyChanged: (bindable, oldValue, newValue) =>
                 {
-                    ((BaseLayout<T>)bindable).InvalidateLayout();
+                    ((BaseLayout)bindable).InvalidateLayout();
                 });
 
         public WrapOrientation Orientation
@@ -72,10 +72,10 @@ namespace LayoutsDemo.Layouts
 
         // Column spacing
         public static readonly BindableProperty ColumnSpacingProperty =
-           BindableProperty.Create("ColumnSpacing", typeof(double), typeof(BaseLayout<T>), defaultValue: 2.0,
+           BindableProperty.Create("ColumnSpacing", typeof(double), typeof(BaseLayout), defaultValue: 2.0,
                propertyChanged: (bindable, oldValue, newValue) =>
                {
-                   ((BaseLayout<T>)bindable).InvalidateLayout();
+                   ((BaseLayout)bindable).InvalidateLayout();
                });
 
         public double ColumnSpacing
@@ -86,10 +86,10 @@ namespace LayoutsDemo.Layouts
 
         // Row spacing
         public static readonly BindableProperty RowSpacingProperty =
-           BindableProperty.Create("RowSpacing", typeof(double), typeof(BaseLayout<T>), defaultValue: 2.0,
+           BindableProperty.Create("RowSpacing", typeof(double), typeof(BaseLayout), defaultValue: 2.0,
                 propertyChanged: (bindable, oldValue, newValue) =>
                 {
-                    ((BaseLayout<T>)bindable).InvalidateLayout();
+                    ((BaseLayout)bindable).InvalidateLayout();
                 });
 
         public double RowSpacing

@@ -2,7 +2,7 @@
 
 namespace LayoutsDemo.Layouts
 {
-    public class WrapLayout : BaseLayout<View>
+    public class WrapLayout : BaseLayout
     {
     }
 }
