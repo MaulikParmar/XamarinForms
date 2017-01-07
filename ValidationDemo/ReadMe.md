@@ -11,9 +11,13 @@ Part 2 : https://www.youtube.com/watch?v=c7AQh1RBH1o
 
 
 
+
 If you are wpf developer and you have worked on validation using 'INotifyDataErrorInfo', easy stuff for you.
 
+
+
 Step 1 : Implement 'INotifyDataErrorInfo' interface for your model.(Check "ValidationBase.cs" file)
+
 Step 2 : Add DataAnnotations validation for your model.
 
 I.E. 
@@ -33,6 +37,7 @@ I.E.
 
 
 Step 3 : Set "ShowErrorMessage" property true for your MpEntry or MpEditor Control
+
 Step 4 : Bind "ErrorMessage" property to label to show error message.
 
 I.E.
